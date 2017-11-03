@@ -1,0 +1,10 @@
+{
+  "name": "AccelRecord",
+  "type": "record",
+  "fields": [
+    {"name": "x", "type": "float"},
+    {"name": "y", "type": "float"},
+    {"name": "z", "type": "float"},
+    {"name": "sample_count", "type" : "int"},
+    {"name": "start_time", "type": {"type": "long", "logicalType": "timestamp-millis"}},
+    {"name": "end_time",   "type": {"type": "long", "logicalType": "timestamp-millis"}}]}

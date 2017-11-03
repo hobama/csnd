@@ -1,0 +1,19 @@
+# -*- coding: utf-8-unix -*-
+offline_mode: false
+out_dir: /opt/csnd/out
+pid_file: /opt/csnd/run/csnd.pid
+
+logging:
+  level: info # trace, debug, info, warning, error, critical, off
+  logger: file # console or file
+  file_settings:
+    filename: /var/log/csnd.log
+    max_file_size: 4194304 # 4MB
+    max_files: 8
+
+sensor:
+  device_file: "/dev/ttyACM0"
+
+iothub:
+  bucket_size: 18000
+  connection_string: "YOUR_CONNECTION_STRING"

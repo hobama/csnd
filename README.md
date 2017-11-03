@@ -1,4 +1,6 @@
-# csnd (Citizen Seismology Network Daemon)
+# csnd
+
+Citizen Seismology Network Daemon
 
 ## Prerequisites
 
@@ -59,11 +61,20 @@
    - pidファイル出力先 (pid_file)
 2. src/csnd を上で決めたディレクトリに配置する
 3. csnd.yml をひな形ファイル doc/csnd.yml.example をもとに上で決めた内容に合わせて作成する。
+   - iothub.connection_string は CSN 管理者から発行された接続文字列を設定する。接続文字列がない場合は offline_mode を true に設定し、オフラインモードで使用する。
+   - logging.logger を console にする場合は、 -d オプションを用いずフォアグラウンドモードで実行する。
 4. csnd.service をひな形ファイル doc/csnd.service.example をもとに上で決めた内容に合わせて作成する。
 5. csnd.service を /etc/systemd/system/ にコピーし、 systemctl で有効化する。
 ```(sh)
 # systemctl enable csnd.service
 ```
+
+## Command line options
+
+| option | description|
+|------|-------------|
+| -c /path/of/csnd.yml | set config file path |
+| -d | run on daemon mode |
 
 ### Known Issues
 

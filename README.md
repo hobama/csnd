@@ -43,7 +43,7 @@
 
 ## Build
 
-* git clone
+* git clone https://github.com/sgr/csnd.git
 * mkdir <BUILD_DIRECTORY>
 * cd <BUILD_DIRECTORY>
 * cmake <SOURCE_DIRECTORY>

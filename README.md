@@ -5,7 +5,7 @@ Citizen Seismology Network Daemon
 ## Prerequisites
 
 * build-essential
-* cmake (> 2.8.12)
+* cmake (>= 2.8.12)
 * following dependencies
 
 なお、USB接続のセンサーから読み取るため、csndを動かすユーザーは dialout グループに属している必要がある。

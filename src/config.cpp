@@ -150,9 +150,9 @@ csn::config::config(const std::string& config_file) :
     _iothub_conn_string = config["iothub"]["connection_string"].as<std::string>();
     // deviceId をパースする
     std::vector<std::string> token = split(_iothub_conn_string, ';');
-    if (token.size() > 2) {
+    if (token.size() >= 2) {
       std::vector<std::string> kv = split(token.at(1), '=');
-      if (kv.size() > 2) {
+      if (kv.size() >= 2) {
         _device_id = kv.at(1);
       }
     }

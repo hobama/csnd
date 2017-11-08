@@ -30,7 +30,7 @@ Citizen Seismology Network Daemon
 
 |  name   | debian (raspbian) |    centos     |          note          |
 |:-------:|:-----------------:|:-------------:|:----------------------:|
-|  lzma   |    liblzma-dev    |    xz-libs    ||
+|  lzma   |    liblzma-dev    |    xz-devel   ||
 |  zlib   |     liblz-dev     |  zlib-devel   ||
 | jansson |  libjansson-dev   | jansson-devel |    version >= 2.3      |
 | snappy  |  libsnappy-dev    | snappy-devel  ||

@@ -19,14 +19,14 @@ Citizen Seismology Network Daemon
 | spdlog  |  N/A (embedded*)  | spdlog (epel) | *required CMake >= 3.1 |
 
 
-### Avro-C++
+### [Avro-C++](https://github.com/Azure/azure-iot-sdk-c)
 
 |  name   | debian (raspbian) |    centos     |          note          |
 |:-------:|:-----------------:|:-------------:|:----------------------:|
 |  boost  | libboost-all-dev  |  boost-devel  | version >= 1.38        |
 |  zlib   |     liblz-dev     |  zlib-devel   ||
 
-### Avro-C
+### [Avro-C](https://github.com/Azure/azure-iot-sdk-c)
 
 |  name   | debian (raspbian) |    centos     |          note          |
 |:-------:|:-----------------:|:-------------:|:----------------------:|
@@ -35,7 +35,7 @@ Citizen Seismology Network Daemon
 | jansson |  libjansson-dev   | jansson-devel |    version >= 2.3      |
 | snappy  |  libsnappy-dev    | snappy-devel  ||
 
-### azure-iot-sdk-c
+### [azure-iothub](https://github.com/sgr/azure-iothub) (contains [azure-iot-sdk-c](https://github.com/Azure/azure-iot-sdk-c))
 
 |  name   |   debian (raspbian)  |    centos     |          note          |
 |:-------:|:--------------------:|:-------------:|:----------------------:|

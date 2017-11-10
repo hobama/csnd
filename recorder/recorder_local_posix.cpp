@@ -74,7 +74,7 @@ bool prepare(const char* path) {
 
 }
 
-std::future< bool > csn::recorder::record_bytes(std::shared_ptr< std::vector< uint8_t > > data) {
+std::future< bool > csn::recorder::record(std::shared_ptr< std::vector< uint8_t > > data) {
   return _pool.enqueue([this, data]() {
       if (prepare(this->_out_dir.c_str())) {
         try {
@@ -96,7 +96,7 @@ std::future< bool > csn::recorder::record_bytes(std::shared_ptr< std::vector< ui
     });
 }
 
-std::future< bool > csn::recorder::record_string(std::shared_ptr< std::string > str) {
+std::future< bool > csn::recorder::record(std::shared_ptr< std::string > str) {
   return _pool.enqueue([this, str]() {
       if (prepare(this->_out_dir.c_str())) {
         try {

@@ -28,8 +28,8 @@ class recorder {
 
   std::function< void(std::shared_ptr< std::vector< std::shared_ptr< csn::accel_record > > >) > flush;
 
-  std::future< bool > record_bytes(std::shared_ptr< std::vector< uint8_t > > data);
-  std::future< bool > record_string(std::shared_ptr< std::string > data);
+  std::future< bool > record(std::shared_ptr< std::vector< uint8_t > > data);
+  std::future< bool > record(std::shared_ptr< std::string > data);
 
  private:
   std::condition_variable _cond;

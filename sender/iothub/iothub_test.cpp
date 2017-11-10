@@ -31,10 +31,12 @@ int main(int argc, char* argv[]) {
   std::shared_ptr<std::string> data_str = std::make_shared<std::string>("{\"name\": \"test\", \"age\": 20}");
   std::shared_ptr<std::vector<uint8_t>> data(new std::vector<uint8_t>(data_str->begin(), data_str->end()));
 
+  std::map<std::string, std::string> prop;
 
   try {
-    sender.send_string(data_str);
-    sender.send_bytes(data);
+    sender.send(prop, data);
+    prop.insert(std::make_pair("kind", "earthquake"));
+    sender.send(prop, data_str);
     return EXIT_SUCCESS;
   } catch(...) {
     try {

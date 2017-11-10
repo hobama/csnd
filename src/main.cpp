@@ -19,6 +19,7 @@
 #include <cstdio>
 #include <fstream>
 #include <iostream>
+#include <map>
 #include <memory>
 #include <stdexcept>
 #include <string>
@@ -154,9 +155,10 @@ int main(int argc, char const *argv[]) {
       std::shared_ptr< std::vector<uint8_t> > data = serializer->serialize(records);
       log->info("SERIALIZED {} RECORDS TO {} BYTES", records->size(), data->size());
       if (cfg->offline_mode()) {
-        recorder->record_bytes(data);
+        recorder->record(data);
       } else {
-        sender->send_bytes(data);
+        std::map<std::string, std::string> prop;
+        sender->send(prop, data);
       }
     };
 
@@ -164,9 +166,12 @@ int main(int argc, char const *argv[]) {
     detector->callback = [&](const std::string& s) {
       log->info("DETECTED!");
       if (cfg->offline_mode()) {
-        recorder->record_string(std::make_shared< std::string >(s));
+        recorder->record(std::make_shared< std::string >(s));
       } else {
-        sender->send_string(std::make_shared< std::string >(s));
+        std::map<std::string, std::string> prop;
+        // 地震イベントは IoT Hub 側でルーティングするためプロパティを付与
+        prop.insert(std::make_pair("kind", "earthquake"));
+        sender->send(prop, std::make_shared< std::string >(s));
       }
     };
 
@@ -174,12 +179,12 @@ int main(int argc, char const *argv[]) {
     if (!cfg->offline_mode()) {
       sender->send_bytes_fallback = [&](std::shared_ptr< std::vector< uint8_t > > data) {
         log->warn("CALLED FALLBACK FUNCTION TO WRITE {} BYTES", data->size());
-        return recorder->record_bytes(data);
+        return recorder->record(data);
       };
 
       sender->send_string_fallback = [&](std::shared_ptr< std::string > str) {
         log->warn("CALLED FALLBACK FUNCTION TO WRITE {} BYTES", str->size());
-        return recorder->record_string(str);
+        return recorder->record(str);
       };
     }
 

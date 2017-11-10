@@ -118,8 +118,8 @@ int main(int argc, char const *argv[]) {
     }
 
     log->set_level(cfg->logging_level());
-    log->info("CONFIG ({}): {}, {}, {}, {}", cfg->device_id(), cfg->iothub_bucket_size(),
-              cfg->sensor_device_file(), cfg->iothub_conn_string(), cfg->out_dir());
+    log->info("CONFIG ({}): {}, {}, {}", cfg->device_id(), cfg->iothub_bucket_size(),
+              cfg->sensor_device_file(), cfg->out_dir());
 
 #ifdef USE_AVROCPP
     std::shared_ptr< csn::serializer > serializer(new csn::serializer_avrocpp(csn::avro_codec::deflate));

@@ -12,8 +12,8 @@ class sender_iothub : public sender {
   sender_iothub(const std::string connection_string);
   sender_iothub() = delete;
   ~sender_iothub();
-  void send(std::map< std::string, std::string > prop, std::shared_ptr< std::vector< uint8_t > > data);
-  void send(std::map< std::string, std::string > prop, std::shared_ptr< std::string > str);
+  void send(std::map< std::string, std::string > prop, std::shared_ptr< std::vector< uint8_t > > data, std::function< void() >&& fallback);
+  void send(std::map< std::string, std::string > prop, std::shared_ptr< std::string > str, std::function< void() >&& fallback);
  private:
   aziot::iothub hub;
 };

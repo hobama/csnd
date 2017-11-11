@@ -158,35 +158,29 @@ int main(int argc, char const *argv[]) {
         recorder->record(data);
       } else {
         std::map<std::string, std::string> prop;
-        sender->send(prop, data);
+        sender->send(prop, data, [data, log]() {
+            log->warn("CALLED FALLBACK FUNCTION TO WRITE {} BYTES", data->size());
+            return recorder->record(data);
+          });
       }
     };
 
     // 揺れを検知した際の振る舞い
     detector->callback = [&](const std::string& s) {
       log->info("DETECTED!");
+      std::shared_ptr< std::string > str = std::make_shared< std::string >(s);
       if (cfg->offline_mode()) {
-        recorder->record(std::make_shared< std::string >(s));
+        recorder->record(str);
       } else {
         std::map<std::string, std::string> prop;
-        // 地震イベントは IoT Hub 側でルーティングするためプロパティを付与
+        // 地震イベントは IoT Hub 側で Event Hub にルーティングするためプロパティを付与
         prop.insert(std::make_pair("kind", "earthquake"));
-        sender->send(prop, std::make_shared< std::string >(s));
+        sender->send(prop, str, [str, log]() {
+            log->warn("CALLED FALLBACK FUNCTION TO WRITE {} BYTES", str->size());
+            return recorder->record(str);
+          });
       }
     };
-
-    // 送信失敗した際の振る舞い
-    if (!cfg->offline_mode()) {
-      sender->send_bytes_fallback = [&](std::shared_ptr< std::vector< uint8_t > > data) {
-        log->warn("CALLED FALLBACK FUNCTION TO WRITE {} BYTES", data->size());
-        return recorder->record(data);
-      };
-
-      sender->send_string_fallback = [&](std::shared_ptr< std::string > str) {
-        log->warn("CALLED FALLBACK FUNCTION TO WRITE {} BYTES", str->size());
-        return recorder->record(str);
-      };
-    }
 
     // サンプリング開始
     if (std::signal(SIGTERM, signal_handler) == SIG_ERR) {

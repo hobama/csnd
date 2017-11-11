@@ -34,9 +34,9 @@ int main(int argc, char* argv[]) {
   std::map<std::string, std::string> prop;
 
   try {
-    sender.send(prop, data);
+    sender.send(prop, data, [data]() { std::cerr << "FAILED TO SEND DATA: " << std::to_string(data->size()) << std::endl; });
     prop.insert(std::make_pair("kind", "earthquake"));
-    sender.send(prop, data_str);
+    sender.send(prop, data_str, [data_str]() { std::cerr << "FAILED TO SEND STR: " << *data_str << std::endl; });
     return EXIT_SUCCESS;
   } catch(...) {
     try {

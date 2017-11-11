@@ -16,7 +16,7 @@ target_include_directories(${PROJECT_NAME} PUBLIC
 ExternalProject_Add(avro-c
   GIT_REPOSITORY https://github.com/apache/avro
   GIT_TAG release-1.8.2
-  DOWNLOAD_COMMAND "" # avro-cpp§«ºË∆¿∫—
+  DOWNLOAD_COMMAND "" # avro-cpp„ÅßÂèñÂæóÊ∏à
   INSTALL_DIR ${DEPEND_LIB_ROOT}
   SOURCE_DIR ${DEPEND_LIB_ROOT}/src/avro
   #SOURCE_SUBDIR lang/c++ # cmake 3.7 or later

@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.8.12)
 project (serializer)
 
-# ½çÈÖ¤òÊÑ¤¨¤Ê¤¤¤³¤È
+# é †ç•ªã‚’å¤‰ãˆãªã„ã“ã¨
 add_subdirectory(avro_cpp)
 add_subdirectory(avro_c)

@@ -39,7 +39,7 @@ ExternalProject_Add(fmt
   )
 
 if(NOT EXISTS /usr/include/spdlog)
-  # spdlog ¤Ï cmake 3.1 °Ê¾å¤¬É¬Í×
+  # spdlog ã¯ cmake 3.1 ä»¥ä¸ŠãŒå¿…è¦
   ExternalProject_Add(spdlog
     GIT_REPOSITORY https://github.com/gabime/spdlog
     GIT_TAG v0.14.0

@@ -23,7 +23,7 @@ Citizen Seismology Network Daemon
 
 |  name   | debian (raspbian) |    centos     |          note          |
 |:-------:|:-----------------:|:-------------:|:----------------------:|
-|  boost  | libboost-all-dev  |  boost-devel  | version >= 1.38        |
+|  boost  | libboost-filesystem-dev <br/> libboost-system-dev <br/> libboost-program-options-dev <br/> libboost-iostreams-dev |  <br/> boost-devel  | version >= 1.38        |
 |  zlib   |     liblz-dev     |  zlib-devel   ||
 
 ### [Avro C](https://github.com/apache/avro)
@@ -78,6 +78,5 @@ Citizen Seismology Network Daemon
 
 ## Known Issues
 
-* Avro-C シリアライザー (libserializer_avroc.a) は正しく動作しない。 Avro-C++ 版を用いること。
-* CentOS では azure-iot-sdk-c のビルドはサブモジュールのクローンが出来ずに失敗する。失敗後手動で `git submodule update --init --recursive` などとして make をやり直す必要がある。
+* 今のところ Avro-C シリアライザー (libserializer_avroc.a) は正しく動作しない。 Avro-C++ 版を用いること。
 * azure-iot-sdk-c は libcurl を必要とするが、CentOS 7 標準パッケージは OpenSSL を使っていないため、HTTP接続の場合初期化で Segmentation Fault を起こす。curl のソースコードから --with-ssl つきでビルドし、ライブラリの場所を LD_LIBRARY_PATH に与えて起動する必要がある。

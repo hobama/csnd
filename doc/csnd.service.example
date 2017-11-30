@@ -5,9 +5,12 @@ After = network.target
 [Service]
 Type=forking
 PIDFile = /opt/csnd/run/csnd.pid
+# ExecStart = /opt/csnd/bin/csnd.sh -c /opt/csnd/etc/csnd.yml -d # for CentOS
 ExecStart = /opt/csnd/bin/csnd -c /opt/csnd/etc/csnd.yml -d
 ExecReload=/bin/kill -HUP $MAINPID
 Restart = no
+# User=user
+# Group=group
 
 [Install]
 WantedBy = multi-user.target

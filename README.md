@@ -53,18 +53,23 @@ Citizen Seismology Network Daemon
 
 ## Install
 
+0. (CentOSのみ) [curl](https://curl.haxx.se/) をソースコードからビルドし、インストールする。
+   - csnd が OS の libcurl より先に見つけられるディレクトリにインストールする。例えば以下の csnd のインストールディレクトリと同一にする。
 1. csnd を配置する場所を決める。
-   - csnd を置くディレクトリ
-   - 設定ファイルを置くディレクトリ
-   - 加速度データおよびイベントデータ出力先 (out_dir)
-   - ログファイル出力先 (logging.file_settings.filename)
-   - pidファイル出力先 (pid_file)
-2. src/csnd を上で決めたディレクトリに配置する。
-3. csnd.yml をひな形ファイル doc/csnd.yml.example をもとに上で決めた内容に合わせて作成する。
+   - インストールディレクトリ (例えば /opt/csnd)
+   - 設定ファイルを置くディレクトリ (例えば /opt/csnd/etc)
+   - 加速度データおよびイベントデータ出力ディレクトリ (例えば /opt/csnd/out 設定ファイルでは out_dir で指定)
+   - ログファイル (例えば /opt/csnd/log/csnd.log 設定ファイルでは logging.file_settings.filename で指定)
+   - pidファイル (例えば /opt/csnd/run/csnd.pid 設定ファイルでは pid_file で指定)
+2. cmake -DCMAKE_INSTALL_PREFIX=<インストールディレクトリ> <csndのソースディレクトリ>
+3. make install
+4. <インストールディレクトリ>/csnd.yml を作成
+   - ひな形ファイル <インストールディレクトリ>/etc/csnd.yml.example をもとに作ると良い。
    - iothub.connection_string は CSN 管理者から発行された接続文字列を設定する。接続文字列がない場合は offline_mode を true に設定し、オフラインモードで使用する。
    - logging.logger を console にする場合は、 -d オプションを用いずフォアグラウンドモードで実行する。
-4. csnd.service をひな形ファイル doc/csnd.service.example をもとに上で決めた内容に合わせて作成する。
-5. csnd.service を /etc/systemd/system/ にコピーし、 systemctl で有効化する。
+5. /etc/systemd/system/csnd.service を作成
+   - ひな形ファイル <インストールディレクトリ>/etc/csnd.service.example をもとに上で決めた内容に合わせて作成する。
+6. csnd.service を systemctl で有効化する。
    ```(sh)
    # systemctl enable csnd.service
    ```

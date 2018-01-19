@@ -40,3 +40,5 @@ else(USE_AVROCPP)
   target_include_directories(${PROJECT_NAME} PRIVATE $<TARGET_PROPERTY:serializer_avroc,INTERFACE_INCLUDE_DIRECTORIES>)
   target_link_libraries(${PROJECT_NAME} serializer_avroc)
 endif(USE_AVROCPP)
+
+install(TARGETS ${PROJECT_NAME} DESTINATION bin)

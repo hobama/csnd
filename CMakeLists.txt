@@ -56,6 +56,15 @@ ExternalProject_Add(thread-pool
   INSTALL_COMMAND install -p -m 0644 -D ${DEPEND_LIB_ROOT}/src/ThreadPool/ThreadPool.h ${DEPEND_LIB_ROOT}/include/ThreadPool.h
   )
 
+#### installation
+install(DIRECTORY DESTINATION ${CMAKE_INSTALL_PREFIX}/etc)
+install(FILES
+  ${CMAKE_SOURCE_DIR}/doc/csnd.service.example
+  ${CMAKE_SOURCE_DIR}/doc/csnd.yml.example
+  DESTINATION etc)
+#install(DIRECTORY DESTINATION ${CMAKE_INSTALL_PREFIX}/log)
+#install(DIRECTORY DESTINATION ${CMAKE_INSTALL_PREFIX}/out)
+#install(DIRECTORY DESTINATION ${CMAKE_INSTALL_PREFIX}/run)
 
 #### subdirectories
 add_subdirectory(detector)

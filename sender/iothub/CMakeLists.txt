@@ -18,6 +18,7 @@ target_include_directories(${PROJECT_NAME} PUBLIC
 
 ExternalProject_Add(azure-iothub
   GIT_REPOSITORY https://github.com/sgr/azure-iothub
+  GIT_TAG v1.0.0
   INSTALL_DIR ${DEPEND_LIB_ROOT}
   CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${DEPEND_LIB_ROOT}
   )

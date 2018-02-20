@@ -1,0 +1,2 @@
+# ONavi USB seismic sensor
+KERNEL=="ttyACM*", SUBSYSTEMS=="usb", ATTRS{idVendor}=="04e2", ATTRS{idProduct}=="1410", NAME="ttyACM0", ENV{SYSTEMD_WANTS}="csnd.service"

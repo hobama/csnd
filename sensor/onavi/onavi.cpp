@@ -82,16 +82,14 @@ std::shared_ptr<csn::accel_record> csn::sensor_onavi::sample() {
   high_resolution_clock::time_point end_time = start_time;
   x_acc = y_acc = z_acc = 0.0f;
   while (end_time < limit) {
-    if (start_time != end_time) {
-      std::this_thread::sleep_for(SAMPLING_INTERVAL);
-    }
     x = y = z = 0.0f;
     if (read_xyz(x, y, z)) {
-      end_time = high_resolution_clock::now();
       x_acc += x;
       y_acc += y;
       z_acc += z;
       sample_count++;
+      std::this_thread::sleep_for(SAMPLING_INTERVAL);
+      end_time = high_resolution_clock::now();
     } else {
       throw std::runtime_error("READ SENSOR ERROR");
     }

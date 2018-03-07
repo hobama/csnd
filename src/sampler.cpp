@@ -20,13 +20,13 @@ void csn::sampler::stop() {
 void csn::sampler::sample1() {
   log_info("BEGIN SAMPLING");
   high_resolution_clock::time_point next_time = high_resolution_clock::now() + DURATION;
-  do {
+  while (!_stop) {
     if (sample) {
       sample();
     }
     std::this_thread::sleep_until(next_time);
     next_time += DURATION;
-  } while (!_stop);
+  }
   log_info("SAMPLER HAS BEEN STOPPED");
 }
 

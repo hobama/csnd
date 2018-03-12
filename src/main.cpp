@@ -167,14 +167,14 @@ int main(int argc, char const *argv[]) {
 
     // 揺れを検知した際の振る舞い
     detector->callback = [&](const std::string& s) {
-      log->info("DETECTED!");
+      log->info("QUAKE!");
       std::shared_ptr< std::string > str = std::make_shared< std::string >(s);
       if (cfg->offline_mode()) {
         recorder->record(str);
       } else {
         std::map<std::string, std::string> prop;
-        // 地震イベントは IoT Hub 側で Event Hub にルーティングするためプロパティを付与
-        prop.insert(std::make_pair("kind", "earthquake"));
+        // 揺れイベントは IoT Hub 側で Event Hub にルーティングするためプロパティを付与
+        prop.insert(std::make_pair("kind", "quake"));
         sender->send(prop, str, [str, log]() {
             log->warn("CALLED FALLBACK FUNCTION TO WRITE {} BYTES", str->size());
             return recorder->record(str);

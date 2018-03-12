@@ -71,7 +71,7 @@ int main(int argc, char const *argv[]) {
 
     std::shared_ptr<csn::detector> detector(new csn::detector_slr(std::string("bogus_device")));
     detector->callback = [&](const std::string& s) {
-      logger->info("EARTHQUAKE!!! {}", s);
+      logger->info("QUAKE!!! {}", s);
     };
 
     sampler.reset(new csn::sampler());

@@ -60,11 +60,11 @@ void csn::detector_slr::push(const std::shared_ptr< csn::accel_record > ar) {
             this->_trigger_count = 0;
             // イベントJSON生成
             // TODO JSON ライブラリの利用
-            std::string s("{\"type\":\"earthquake\",\"method\":\"sta-lta-ratio\",");
+            std::string s("{\"type\":\"quake\",\"method\":\"sta-lta-ratio\",");
             s += "\"deviceId\":\"" + _device_id + "\",";
             s += "\"time\":" + std::to_string(duration_cast<milliseconds>(ar->start_time.time_since_epoch()).count()) + ",";
             s += "\"data\":{\"sta\":" + std::to_string(sta) + ",\"lta\":" + std::to_string(lta) + "}}";
-            //log_debug("!!!EARTHQUAKE!!! {}", s);
+            //log_debug("!!!QUAKE!!! {}", s);
             if (callback) {
               callback(s);
             }

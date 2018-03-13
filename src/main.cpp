@@ -158,6 +158,7 @@ int main(int argc, char const *argv[]) {
         recorder->record(data, ".avro");
       } else {
         std::map<std::string, std::string> prop;
+        prop.insert(std::make_pair("batch", "false"));
         sender->send(prop, data, [data, log]() {
             log->warn("CALLED FALLBACK FUNCTION TO WRITE {} BYTES", data->size());
             return recorder->record(data, "avro");
@@ -175,6 +176,7 @@ int main(int argc, char const *argv[]) {
         std::map<std::string, std::string> prop;
         // 揺れイベントは IoT Hub 側で Event Hub にルーティングするためプロパティを付与
         prop.insert(std::make_pair("kind", "quake"));
+        prop.insert(std::make_pair("batch", "false"));
         sender->send(prop, str, [str, log]() {
             log->warn("CALLED FALLBACK FUNCTION TO WRITE {} BYTES", str->size());
             return recorder->record(str, "_quake.json");

@@ -28,8 +28,8 @@ class recorder {
 
   std::function< void(std::shared_ptr< std::vector< std::shared_ptr< csn::accel_record > > >) > flush;
 
-  std::future< bool > record(std::shared_ptr< std::vector< uint8_t > > data);
-  std::future< bool > record(std::shared_ptr< std::string > data);
+  std::future< bool > record(std::shared_ptr< std::vector< uint8_t > > data, std::string suffix);
+  std::future< bool > record(std::shared_ptr< std::string > data, std::string suffix);
 
  private:
   std::condition_variable _cond;
@@ -41,6 +41,8 @@ class recorder {
   ThreadPool _pool;
   std::string _out_dir;
   std::future< void > _last_ftr;
+  std::string output_file_name(std::string suffix);
+  std::future< bool > record1(std::function< void() > writer);
 };
 
 }

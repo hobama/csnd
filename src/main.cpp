@@ -155,12 +155,12 @@ int main(int argc, char const *argv[]) {
       std::shared_ptr< std::vector<uint8_t> > data = serializer->serialize(records);
       log->info("SERIALIZED {} RECORDS TO {} BYTES", records->size(), data->size());
       if (cfg->offline_mode()) {
-        recorder->record(data);
+        recorder->record(data, ".avro");
       } else {
         std::map<std::string, std::string> prop;
         sender->send(prop, data, [data, log]() {
             log->warn("CALLED FALLBACK FUNCTION TO WRITE {} BYTES", data->size());
-            return recorder->record(data);
+            return recorder->record(data, "avro");
           });
       }
     };
@@ -170,14 +170,14 @@ int main(int argc, char const *argv[]) {
       log->info("QUAKE!");
       std::shared_ptr< std::string > str = std::make_shared< std::string >(s);
       if (cfg->offline_mode()) {
-        recorder->record(str);
+        recorder->record(str, "_quake.json");
       } else {
         std::map<std::string, std::string> prop;
         // 揺れイベントは IoT Hub 側で Event Hub にルーティングするためプロパティを付与
         prop.insert(std::make_pair("kind", "quake"));
         sender->send(prop, str, [str, log]() {
             log->warn("CALLED FALLBACK FUNCTION TO WRITE {} BYTES", str->size());
-            return recorder->record(str);
+            return recorder->record(str, "_quake.json");
           });
       }
     };

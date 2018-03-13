@@ -74,20 +74,21 @@ bool prepare(const char* path) {
 
 }
 
-std::future< bool > csn::recorder::record(std::shared_ptr< std::vector< uint8_t > > data) {
-  return _pool.enqueue([this, data]() {
+std::string csn::recorder::output_file_name(std::string suffix) {
+  int64_t now = int64now();
+  std::string filename(_out_dir);
+  filename += "/" + std::to_string(now) + suffix;
+  return filename;
+}
+
+std::future< bool > csn::recorder::record1(std::function< void() > writer) {
+  return _pool.enqueue([this, writer]() {
       if (prepare(this->_out_dir.c_str())) {
         try {
-          int64_t now = int64now();
-          std::string filename(_out_dir);
-          filename += "/" + std::to_string(now) + ".avro";
-          std::ofstream out_file;
-          out_file.open(filename, std::ios::out | std::ios::binary);
-          out_file.write((char*)&(*data)[0], data->size());
-          out_file.close();
+          writer();
           return true;
         } catch (const std::exception& ex) {
-          log_error("FAILED TO WRITE AVRO FILE: {}", ex.what());
+          log_error("FAILED TO WRITE FILE: {}", ex.what());
           return false;
         }
       } else {
@@ -96,24 +97,22 @@ std::future< bool > csn::recorder::record(std::shared_ptr< std::vector< uint8_t 
     });
 }
 
-std::future< bool > csn::recorder::record(std::shared_ptr< std::string > str) {
-  return _pool.enqueue([this, str]() {
-      if (prepare(this->_out_dir.c_str())) {
-        try {
-          int64_t now = int64now();
-          std::string filename(_out_dir);
-          filename += "/" + std::to_string(now) + ".json";
-          std::ofstream out_file;
-          out_file.open(filename, std::ios::out);
-          out_file << *str;
-          out_file.close();
-          return true;
-        } catch (const std::exception& ex) {
-          log_error("FAILED TO WRITE JSON FILE: {}", ex.what());
-          return false;
-        }
-      } else {
-        return false;
-      }
+std::future< bool > csn::recorder::record(std::shared_ptr< std::vector< uint8_t > > data, std::string suffix) {
+  return record1([this, suffix, data]() {
+      std::string filename = output_file_name(suffix);
+      std::ofstream out_file;
+      out_file.open(filename, std::ios::out | std::ios::binary);
+      out_file.write((char*)&(*data)[0], data->size());
+      out_file.close();
+    });
+}
+
+std::future< bool > csn::recorder::record(std::shared_ptr< std::string > str, std::string suffix) {
+  return record1([this, suffix, str]() {
+      std::string filename = output_file_name(suffix);
+      std::ofstream out_file;
+      out_file.open(filename, std::ios::out);
+      out_file << *str;
+      out_file.close();
     });
 }
